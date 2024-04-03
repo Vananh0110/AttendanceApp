@@ -15,6 +15,11 @@ import AttendanceClassTeacher from './pages/admin/attendance/attendanceclassteac
 import AttendanceDate from './pages/admin/attendance/attendancedate';
 import AttendanceStudentList from './pages/admin/attendance/attendancestudentlist';
 import TeacherCalendar from './pages/teacher/calendar/calendar';
+import StudentCalendar from './pages/student/calendar/calendar';
+import TeacherAttendance from './pages/teacher/attendance/attendance';
+import AttendanceClass from './pages/teacher/attendance/attendance_class';
+import TeacherReport from './pages/teacher/report/report';
+import ReportClass from './pages/teacher/report/report_class';
 function App() {
   return (
     <Router>
@@ -47,7 +52,15 @@ function App() {
 
           {/* Teacher */}
           <Route path="/teacher/calendar" element={<TeacherCalendar />} />
+          <Route path="/teacher/attendance" element={<TeacherAttendance />} />
+          <Route
+            path="/teacher/attendance/:clazzCode"
+            element={<AttendanceClass />}
+          />
+          <Route path="/teacher/report" element={<TeacherReport />} />
+          <Route path="/teacher/report/:clazzCode" element={<ReportClass />} />
           {/* Student */}
+          <Route path="/student/calendar" element={<StudentCalendar />} />
         </Routes>
       </div>
     </Router>

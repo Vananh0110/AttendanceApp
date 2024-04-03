@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Sidebar, { SidebarItem } from '../../../components/Sidebar';
-import { CalendarDays, BookText, LogOut, Users } from 'lucide-react';
+import { CalendarDays, BookText, LogOut } from 'lucide-react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import '../../../App.css';
-import ClassModal from '../../../components/teacher/calendar/ClassModal';
+import ClassModal from '../../../components/student/calendar/ClassModal';
 const localizer = momentLocalizer(moment);
 
-const TeacherCalendar = () => {
+const StudentCalendar = () => {
   const [user, setUser] = useState(null);
   const [events, setEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -31,7 +31,7 @@ const TeacherCalendar = () => {
     if (userData && userData.email) {
       axios
         .get(
-          `http://127.0.0.1:8000/api/getScheduleForTeacherCalendar/${userData.email}`
+          `http://127.0.0.1:8000/api/getScheduleForStudentCalendar/${userData.email}`
         )
         .then((response) => {
           const apiEvents = response.data.map((event) => {
@@ -56,7 +56,7 @@ const TeacherCalendar = () => {
               course_name: event.course_name,
               start_time: event.start_time,
               end_time: event.end_time,
-              clazz_id: event.clazz_id,
+              teacher_name: event.teacher_name,
             };
           });
 
@@ -80,14 +80,9 @@ const TeacherCalendar = () => {
             icon={<CalendarDays size={20} />}
             text="Calendars"
             alert
-            to="/teacher/calendar"
+            to="/student/calendar"
           />
-          <SidebarItem
-            icon={<Users size={20} />}
-            text="Attendance"
-            to="/teacher/attendance"
-          />
-          <SidebarItem icon={<BookText size={20} />} text="Report" to="/teacher/report" />
+          <SidebarItem icon={<BookText size={20} />} text="Report" />
           <hr className="bg-gray-200" />
           <SidebarItem icon={<LogOut size={20} />} text="Logout" to="/login" />
         </Sidebar>
@@ -116,4 +111,4 @@ const TeacherCalendar = () => {
   );
 };
 
-export default TeacherCalendar;
+export default StudentCalendar;

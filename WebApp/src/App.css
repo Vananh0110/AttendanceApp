@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .App-logo {
@@ -35,4 +36,52 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+/* CSS for calendar */
+.rbc-event {
+  height: 45px;
+  font-size: 12px;
+  color: black;
+  background-color: rgb(191 219 254);
+}
+
+.rbc-selected {
+  color: white;
+}
+
+.rbc-calendar {
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* .rbc-month-view {
+  background-color: #f5f5f5;
+} */
+
+.rbc-toolbar {
+  margin-top: 10px;
+  margin-bottom: 35px;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.rbc-toolbar button {
+  font-size: 14px;
+  font-weight: 500;
+}
+.rbc-month-header {
+  height: 50px;
+}
+
+.rbc-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+/* Tùy chỉnh màu chữ của ngày trong lịch */
+.rbc-date-cell {
+  color: #333333;
 }

@@ -40,7 +40,7 @@ const Login = () => {
           navigate('/teacher/calendar');
         }
         if(user.role_id === 3) {
-          navigate('/student/dashboard');
+          navigate('/student/calendar');
         }
       }
       else {

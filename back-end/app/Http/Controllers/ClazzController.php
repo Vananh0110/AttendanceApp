@@ -62,4 +62,15 @@ class ClazzController extends Controller
 
         return response()->json($clazz);
     }
+    public function getClassTeacherByEmail(Request $request, $userEmail){
+        $clazzes = DB::select('
+        SELECT clazz_code, cl.id AS clazz_id, teacher_name, teacher_id, course_name, course_id, course_code , semester_id FROM
+        clazzes cl
+        JOIN teachers t ON cl.teacher_id = t.id
+        JOIN courses c ON cl.course_id = c.id
+        WHERE t.teacher_email = ?
+        ',[$userEmail]);
+
+        return response()->json($clazzes);
+    }
 }

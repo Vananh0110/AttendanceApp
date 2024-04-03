@@ -38,6 +38,9 @@ Route::get('/getSchedulesByStudentEmail/{userEmail}', [ScheduleController::class
 Route::get('/getSchedulesByTeacherEmailAndDate/{userEmail}/{date}', [ScheduleController::class, 'getSchedulesByTeacherEmailAndDate']);
 Route::get('/getSchedulesByStudentEmailAndDate/{userEmail}/{date}', [ScheduleController::class, 'getSchedulesByStudentEmailAndDate']);
 Route::get('/getScheduleByClazzId/{clazzId}', [ScheduleController::class, 'getScheduleByClazzId']);
+Route::get('/getScheduleForTeacherCalendar/{userEmail}', [ScheduleController::class, 'getSchedulesForTeacherCalendar']);
+Route::get('/getScheduleForStudentCalendar/{userEmail}', [ScheduleController::class, 'getSchedulesForStudentCalendar']);
+Route::get('/getDateByClassCode/{clazzCode}', [ScheduleController::class, 'getDateByClassCode']);
 Route::post('/attendances/storeList', [AttendanceController::class, 'storeList']);
 Route::get('/attendances/student/dates/{student_name}', [AttendanceController::class, 'getAttendanceDateByStudent']);
 Route::get('/attendances/student/clazzcode/{studentName}/{attendanceDate}', [AttendanceController::class, 'getClassByStudentNameAndAttendanceDate']);
@@ -48,6 +51,7 @@ Route::get('/attendances/student/attendancelist/{attendanceDate}/{clazzCode}', [
 Route::get('/student/{student_code}', [StudentController::class, 'getStudentByCode']);
 Route::get('/detail-clazz', [ClazzController::class, 'getDetailClazz']);
 Route::get('/clazz/getClassTeacherByCourseId/{courseId}', [ClazzController::class, 'getClassTeacherByCourseId']);
+Route::get('/getClassTeacherByEmail/{userEmail}', [ClazzController::class, 'getClassTeacherByEmail']);
 Route::get('/attendances/getAttendanceDateByClassCode/{clazzCode}', [AttendanceController::class, 'getAttendanceDateByClassCode']);
 Route::post('/login', [UserController::class, 'login'])->name('login');
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

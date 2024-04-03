@@ -55,7 +55,20 @@ class ScheduleController extends Controller
 
         return response()->json($schedules);
     }
+    public function getSchedulesForTeacherCalendar(Request $request, $userEmail){
+        $schedules = DB::select('
+            SELECT DISTINCT cr.course_name, cr.course_code, c.id as clazz_id, c.clazz_code, s.day_of_week, s.start_time, s.end_time, cr.course_name, s.destination, s.clazz_date
+            FROM schedules s
+            JOIN clazzes c ON s.clazz_id = c.id
+            JOIN teachers t ON c.teacher_id = t.id
+            JOIN courses cr ON c.course_id = cr.id
+            WHERE t.teacher_email = ?
+            ORDER BY s.day_of_week, s.start_time
+        ', [$userEmail]);
 
+        return response()->json($schedules);
+    }
+    
     public function getSchedulesByTeacherEmailAndDate(Request $request, $userEmail, $date)
     {
         // Sử dụng câu truy vấn PostgreSQL với DISTINCT
@@ -76,6 +89,23 @@ class ScheduleController extends Controller
         $schedules = DB::select('
         SELECT DISTINCT s.day_of_week, cr.course_name, cr.course_code, t.teacher_name,
         s.start_time, s.end_time, c.clazz_code, s.destination
+        FROM schedules s
+        JOIN clazzes c ON s.clazz_id = c.id
+        JOIN enrollments e ON c.id = e.clazz_id
+        JOIN students st ON e.student_id = st.id
+        JOIN teachers t ON c.teacher_id = t.id
+        JOIN courses cr ON c.course_id = cr.id
+        WHERE st.student_email = ?
+        ORDER BY s.day_of_week, s.start_time
+        ', [$userEmail]);
+
+        return response()->json($schedules);
+    }
+
+    public function getSchedulesForStudentCalendar(Request $request, $userEmail) {
+        $schedules = DB::select('
+        SELECT s.day_of_week, cr.course_name, cr.course_code, t.teacher_name,
+        s.start_time, s.end_time, c.clazz_code, s.destination, s.clazz_date
         FROM schedules s
         JOIN clazzes c ON s.clazz_id = c.id
         JOIN enrollments e ON c.id = e.clazz_id
@@ -114,5 +144,14 @@ class ScheduleController extends Controller
             ', [$clazzId]);
 
         return response()->json($schedule);
+    }
+
+    public function getDateByClassCode(Request $request, $clazzCode) {
+        $dates = DB::select(
+            'SELECT clazz_date FROM schedules s JOIN clazzes c ON s.clazz_id = c.id
+            WHERE c.clazz_code = ? ORDER BY clazz_date ASC
+            ', [$clazzCode]);
+        
+        return response()->json($dates);
     }
 }
